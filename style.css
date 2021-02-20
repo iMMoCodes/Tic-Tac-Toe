@@ -1,0 +1,166 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+/* Variables */
+:root {
+  --block-size: 100px;
+  --mark-size: calc(var(--block-size) * 0.9);
+}
+
+body {
+  margin: 0;
+}
+
+/* Game area */
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+
+/* One block on the board */
+.block {
+  height: var(--block-size);
+  width: var(--block-size);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Remove borders */
+
+/* Top row */
+.block:first-child,
+.block:nth-child(2),
+.block:nth-child(3) {
+  border-top: none;
+}
+/* Leftside column */
+.block:nth-child(3n + 1) {
+  border-left: none;
+}
+/* Rightside column */
+.block:nth-child(3n + 3) {
+  border-right: none;
+}
+/* Bottom row */
+.block:last-child,
+.block:nth-child(8),
+.block:nth-child(7) {
+  border-bottom: none;
+}
+
+/* Signs and hovers */
+
+/* X sign */
+.block.x::before,
+.block.x::after {
+  background-color: black;
+}
+
+.container.x .block:not(.x):not(.o):hover::before,
+.container.x .block:not(.x):not(.o):hover::after {
+  background-color: lightgray;
+}
+.block.x::before,
+.block.x::after,
+.container.x .block:not(.x):not(.o):hover::before,
+.container.x .block:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+
+.block.x::before,
+.container.x .block:hover::before {
+  transform: rotate(45deg);
+}
+
+.block.x::after,
+.container.x .block:hover::after {
+  transform: rotate(-45deg);
+}
+
+/* O sign */
+.block.o::before,
+.block.o::after {
+  background-color: black;
+}
+
+.container.o .block:not(.x):not(.o):hover::before,
+.container.o .block:not(.x):not(.o):hover::after {
+  background-color: lightgray;
+}
+
+.block.o::before,
+.block.o::after,
+.container.o .block:not(.x):not(.o):hover::before,
+.container.o .block:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.block.o::before,
+.container.o .block:not(.x):not(.o):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.block.o::after,
+.container.o .block:not(.x):not(.o):hover::after {
+  width: calc(var(--mark-size) * 0.8);
+  height: calc(var(--mark-size) * 0.8);
+  background-color: white;
+}
+
+/* If already sign in block */
+.block.x,
+.block.o {
+  cursor: not-allowed;
+}
+
+.end-banner {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 5rem;
+  flex-direction: column;
+}
+
+.end-banner button {
+  font-size: 3rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.end-banner button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
+.end-banner.show {
+  display: flex;
+}
